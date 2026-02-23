@@ -1,99 +1,126 @@
 import streamlit as st
 import datetime
 
-# 画面設定
-st.set_page_config(page_title="Jin In-flight Concierge", layout="wide")
+# ページ設定
+st.set_page_config(page_title="Jin Guest Concierge", layout="wide")
 
-# スタイル定義
+# 言語データの定義
+LANG_DICT = {
+    "日本語": {
+        "welcome": "ご滞在ありがとうございます",
+        "desc": "大淀町の宿「Jin」へようこそ。お客様の旅が快適なものになるようお手伝いいたします。",
+        "wifi_label": "Wi-Fi接続情報",
+        "rules": "ハウスルール",
+        "rule_list": ["・室内は完全禁煙です", "・夜22:00以降はお静かにお願いします", "・ゴミは分別にご協力をお願いします"],
+        "guide": "周辺ガイド",
+        "shops": "🛒 買い出し",
+        "dining": "🍽 お食事（徒歩圏内）",
+        "support": "緊急・サポート",
+        "medical": "医療機関"
+    },
+    "English": {
+        "welcome": "Welcome Aboard",
+        "desc": "Welcome to Jin. We are delighted to have you stay with us in Oyodo.",
+        "wifi_label": "Wi-Fi Information",
+        "rules": "House Rules",
+        "rule_list": ["- No smoking inside", "- Please be quiet after 10 PM", "- Please separate your trash"],
+        "guide": "Local Guide",
+        "shops": "🛒 Shopping",
+        "dining": "🍽 Dining (Walking distance)",
+        "support": "Support",
+        "medical": "Medical Info"
+    },
+    "Français": {
+        "welcome": "Bienvenue à bord",
+        "desc": "Bienvenue chez Jin. Nous sommes ravis de vous accueillir à Oyodo.",
+        "wifi_label": "Informations Wi-Fi",
+        "rules": "Règlement intérieur",
+        "rule_list": ["- Interdiction de fumer à l'intérieur", "- Merci de ne pas faire de bruit après 22h", "- Merci de trier vos déchets"],
+        "guide": "Guide Local",
+        "shops": "🛒 Shopping",
+        "dining": "🍽 Restaurants (À pied)",
+        "support": "Assistance",
+        "medical": "Infos Médicales"
+    },
+    "简体中文": {
+        "welcome": "欢迎光临",
+        "desc": "欢迎来到 Jin。祝您在大淀町度过愉快的时光。",
+        "wifi_label": "Wi-Fi 信息",
+        "rules": "住宿规则",
+        "rule_list": ["- 室内禁止吸烟", "- 晚上22点后请保持安静", "- 请协助进行垃圾分类"],
+        "guide": "周边指南",
+        "shops": "🛒 购物",
+        "dining": "🍽 餐厅 (步行范围)",
+        "support": "紧急联络",
+        "medical": "医疗信息"
+    },
+    "ไทย": {
+        "welcome": "ยินดีต้อนรับ",
+        "desc": "ยินดีต้อนรับสู่ Jin เราหวังว่าคุณจะมีความสุขในการพักผ่อนที่โอยาโดะ",
+        "wifi_label": "ข้อมูล Wi-Fi",
+        "rules": "กฎระเบียบของที่พัก",
+        "rule_list": ["- ห้ามสูบบุหรี่ภายในห้องพัก", "- กรุณางดใช้เสียงดังหลัง 22:00 น.", "- กรุณาแยกขยะก่อนทิ้ง"],
+        "guide": "คำแนะนำสถานที่ใกล้เคียง",
+        "shops": "🛒 แหล่งช้อปปิ้ง",
+        "dining": "🍽 ร้านอาหาร (ระยะเดิน)",
+        "support": "ติดต่อฉุกเฉิน",
+        "medical": "ข้อมูลการแพทย์"
+    }
+}
+
+# デザイン設定
 st.markdown("""
     <style>
     .main { background-color: #002255; color: white; }
-    .stButton>button {
-        border-radius: 8px; background-color: #004488; color: white;
-        height: 60px; font-weight: bold; border: 1px solid #00aaff;
-    }
-    .info-card {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 20px; border-radius: 15px;
-        margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1);
-    }
-    h1, h2, h3 { color: #00aaff !important; }
-    .status-text { font-size: 1.2rem; font-weight: bold; color: #ffffff; }
+    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
+    .stTabs [data-baseweb="tab"] { background-color: rgba(255, 255, 255, 0.05); border-radius: 4px; color: #ccddee !important; }
+    .stTabs [aria-selected="true"] { background-color: #004488 !important; }
+    .info-card { background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 10px; }
+    .accent-text { color: #00aaff; font-weight: bold; }
     </style>
     """, unsafe_allow_html=True)
 
-# 1. ヘッダー（現在の状況）
-col_logo, col_time, col_weather = st.columns([2, 2, 2])
-with col_logo:
-    st.title("✈️ Jin")
-with col_time:
+# 言語選択（機内モニターのようにトップに配置）
+sel_lang = st.selectbox("🌐 Language / 言語選択", list(LANG_DICT.keys()))
+L = LANG_DICT[sel_lang]
+
+# ヘッダー
+col_title, col_status = st.columns([3, 2])
+with col_title:
+    st.markdown("## ✈︎ Jin Concierge")
+with col_status:
     now = datetime.datetime.now()
-    st.markdown(f"**Current Time** \n<span class='status-text'>{now.strftime('%H:%M')}</span>", unsafe_allow_html=True)
-with col_weather:
-    st.markdown("**Destination: OYODO** \n<span class='status-text'>Fine / 22°C</span>", unsafe_allow_html=True)
+    st.markdown(f"<div style='text-align: right; opacity: 0.8;'>{now.strftime('%H:%M')} | Checkout: 10:00 AM</div>", unsafe_allow_html=True)
 
-st.divider()
-
-# 2. メイン機能タブ（実用性重視の5項目）
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 HOME", "📶 WiFi/RULE", "🚿 HOW TO USE", "🍽 EAT/SHOP", "🆘 HELP"])
+# メインタブ
+tab1, tab2, tab3, tab4 = st.tabs(["🏠 Home", "📶 Info", "🍽 Guide", "🆘 Help"])
 
 with tab1:
-    st.subheader("Welcome Aboard")
-    st.markdown("""
-    <div class="info-card">
-        <h4>快適なご滞在のために</h4>
-        <p>宿「Jin」の設備案内や周辺情報は、上のタブからご覧いただけます。<br>
-        チェックアウト時間は <b>10:00 AM</b> です。</p>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("祝賀バルーンを飛ばす 🎈"):
-        st.balloons()
+    st.subheader(L["welcome"])
+    st.markdown(f"""<div class="info-card"><h4>{L['welcome']}</h4><p>{L['desc']}</p><hr style="opacity:0.2"><p>Check-out: <span class="accent-text">10:00 AM</span></p></div>""", unsafe_allow_html=True)
+    if st.button("Celebration 🎈"): st.balloons()
 
 with tab2:
-    st.subheader("Flight Connection & Rules")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.info("**Wi-Fi Network**")
-        st.code("SSID: Jin_Guest_WiFi\nPASS: Q99srAe5", language="")
-    with col2:
-        st.warning("**Cabin Rules**")
-        st.write("🚭 全館禁煙 / No Smoking")
-        st.write("🌙 22時以降はお静かに / Quiet Hours")
-
-with tab3:
-    st.subheader("Equipment Guide (設備の使いかた)")
-    exp1 = st.expander("♨️ お風呂・給湯器")
-    exp1.write("1. 壁のリモコンの「優先」ボタンを押す  \n2. 40〜42度に設定  \n3. 「自動」または「おいだき」を押してください。")
-    
-    exp2 = st.expander("❄️ エアコン・暖房")
-    exp2.write("リモコンの「運転」で開始。大淀の冬は冷え込むため、入室後は早めの暖房をお勧めします。")
-    
-    exp3 = st.expander("🗑 ゴミの分別")
-    exp3.write("キッチン下のゴミ箱へ。「燃えるゴミ」「プラスチック」「ペットボトル・缶」に分けてください。")
-
-with tab4:
-    st.subheader("Local Amenities")
+    st.subheader(L["wifi_label"] + " & " + L["rules"])
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("**🛒 買い出し**")
-        st.write("・**オークワ 大淀西店** (車で3分)")
-        st.write("・**ローソン/セブンイレブン** (車で2分)")
+        st.markdown(f"""<div class="info-card"><p class="accent-text">{L['wifi_label']}</p><p style="font-size: 0.8rem;">SSID: <b>Deco_C884</b></p><p style="font-size: 0.8rem;">Pass: <b>Q99srAe5</b></p></div>""", unsafe_allow_html=True)
     with c2:
-        st.markdown("**🍺 お食事**")
-        st.write("・**地元の居酒屋** (徒歩圏内)")
-        st.write("・**道の駅 吉野路大淀ｉセンター** (車で5分)")
-    
-    st.write("")
-    st.link_button("👉 周辺のグルメマップを開く (Google Map)", "https://www.google.com/maps/search/%E5%A4%A7%E6%B7%80%E7%94%BA+%E3%82%B0%E3%83%AB%E3%83%A1")
+        rules_html = "".join([f"<li>{r}</li>" for r in L["rule_list"]])
+        st.markdown(f"""<div class="info-card"><p class="accent-text">{L['rules']}</p><ul style="font-size:0.9rem; padding-left:15px;">{rules_html}</ul></div>""", unsafe_allow_html=True)
 
-with tab5:
-    st.subheader("Service & Safety")
-    st.error("緊急時は以下のボタンからオーナーへご連絡ください")
-    st.write("オーナー直通電話： 090-XXXX-XXXX")
-    
-    st.divider()
-    st.markdown("**🏥 医療機関 (Emergency Medical)**")
-    st.write("大淀町立大淀病院: 0747-52-3081")
+with tab3:
+    st.subheader(L["guide"])
+    c_a, c_b = st.columns(2)
+    with c_a:
+        st.markdown(f"""<div class="info-card"><p class="accent-text">{L['shops']}</p><p><b>Life Oyodo (ライフ)</b><br>2 min by car</p><p><b>FamlyMart</b><br>2 min by car</p></div>""", unsafe_allow_html=True)
+    with c_b:
+        st.markdown(f"""<div class="info-card"><p class="accent-text">{L['dining']}</p><p><b>Akakage (赤影)</b> - Yakitori</p><p><b>Torikin (鳥欽)</b> - Yakitori</p><p><b>Wako (和光)</b> - Sushi</p></div>""", unsafe_allow_html=True)
+    st.link_button("Google Maps", "https://www.google.com/maps")
 
-# フッター
-st.markdown("<br><p style='text-align: center; opacity: 0.5;'>Jin In-flight Concierge Service</p>", unsafe_allow_html=True)
+with tab4:
+    st.subheader(L["support"])
+    st.markdown(f"""<div class="info-card" style="border-left: 4px solid #ff4444;"><p class="accent-text">Owner Contact</p><p style="font-size: 1.5rem;">📞 080-9419-6063</p></div>""", unsafe_allow_html=True)
+    st.markdown(f"""<div class="info-card"><p class="accent-text">{L['medical']}</p><p><b>Minami-Nara Medical Center</b><br>0747-54-5000</p><p><b>Nakatsuji Clinic</b><br>0747-52-2115</p></div>""", unsafe_allow_html=True)
+
+st.markdown("<p style='text-align: center; opacity: 0.5;'>Jin In-flight Concierge</p>", unsafe_allow_html=True)
