@@ -101,13 +101,12 @@ st.markdown("""
     }
     .accent-blue { color: #00aaff; font-weight: bold; font-size: 1.5rem; margin-bottom: 10px; }
     .big-value { font-size: 3rem; font-weight: bold; color: white; }
-    ul { list-style-type: none; padding-left: 0; }
-    li { margin-bottom: 15px; font-size: 1.4rem; border-left: 3px solid #00aaff; padding-left: 15px; }
+    .rule-item { margin-bottom: 15px; font-size: 1.4rem; border-left: 3px solid #00aaff; padding-left: 15px; }
     </style>
     """, unsafe_allow_html=True)
 
 # 言語選択
-sel_lang = st.selectbox("🌐 Change Language", list(LANG_DICT.keys()))
+sel_lang = st.selectbox("🌐 Language Selection / 言語選択", list(LANG_DICT.keys()))
 L = LANG_DICT[sel_lang]
 
 # ヘッダー（日本時間）
@@ -123,59 +122,31 @@ tab1, tab2, tab3, tab4 = st.tabs(["HOME", "INFO", "GUIDE", "HELP"])
 
 with tab1:
     st.markdown(f"### {L['welcome']}")
-    st.markdown(f"""
-        <div class="info-card">
-            <p style="font-size: 1.5rem; line-height: 1.6;">{L['desc']}</p>
-            <div class="checkout-highlight">
-                <div style="font-size: 1.2rem; opacity: 0.8;">{L['checkout_label']}</div>
-                <div class="big-value">10:00 AM</div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f'<div class="info-card"><p style="font-size: 1.5rem; line-height: 1.6;">{L["desc"]}</p><div class="checkout-highlight"><div style="font-size: 1.2rem; opacity: 0.8;">{L["checkout_label"]}</div><div class="big-value">10:00 AM</div></div></div>', unsafe_allow_html=True)
 
 with tab2:
     st.markdown(f"### {L['wifi_label']} & Rules")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown(f"""
-            <div class="info-card">
-                <div class="accent-blue">{L['wifi_label']}</div>
-                <p style="opacity: 0.7; margin-bottom:0;">SSID</p>
-                <p style="font-size: 2rem; font-weight: bold; margin-bottom:15px;">Deco_C884</p>
-                <p style="opacity: 0.7; margin-bottom:0;">Password</p>
-                <p style="font-size: 2rem; font-weight: bold;">Q99srAe5</p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["wifi_label"]}</div><p style="opacity: 0.7; margin-bottom:0;">SSID</p><p style="font-size: 2rem; font-weight: bold; margin-bottom:15px;">Deco_C884</p><p style="opacity: 0.7; margin-bottom:0;">Password</p><p style="font-size: 2rem; font-weight: bold;">Q99srAe5</p></div>', unsafe_allow_html=True)
     with c2:
-        rules_html = "".join([f"<li>{r}</li>" for r in L["rule_list"]])
-        st.markdown(f"""
-            <div class="info-card">
-                <div class="accent-blue">{L['rules']}</div>
-                <ul>{rules_html}</ul>
-            </div>
-        """, unsafe_allow_html=True)
+        rules_html = "".join([f'<div class="rule-item">{r}</div>' for r in L["rule_list"]])
+        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["rules"]}</div>{rules_html}</div>', unsafe_allow_html=True)
 
 with tab3:
     st.markdown(f"### {L['guide']}")
     c_a, c_b = st.columns(2)
     with c_a:
-        st.markdown(f"""
-            <div class="info-card">
-                <div class="accent-blue">{L['shops']}</div>
-                <p><b>ライフ 大淀店 (Life)</b><br><small>Supermarket | 9:00-21:00</small></p>
-                <p><b>ファミリーマート (FamilyMart)</b><br><small>Convenience Store | 24h (ATM inside)</small></p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["shops"]}</div><p><b>ライフ 大淀店 (Life)</b><br><small>Supermarket | 9:00-21:00</small></p><p><b>ファミリーマート (FamilyMart)</b><br><small>Convenience Store | 24h (ATM inside)</small></p></div>', unsafe_allow_html=True)
     with c_b:
-        st.markdown(f"""
-            <div class="info-card">
-                <div class="accent-blue">{L['dining']}</div>
-                <p><b>赤影 / 鳥欽 (Akakage/Torikin)</b><br><small>Yakitori (Grilled Chicken)</small></p>
-                <p><b>和光 (Wako)</b><br><small>Traditional Sushi</small></p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["dining"]}</div><p><b>赤影 / 鳥欽 (Akakage/Torikin)</b><br><small>Yakitori (Grilled Chicken)</small></p><p><b>和光 (Wako)</b><br><small>Traditional Sushi</small></p></div>', unsafe_allow_html=True)
     
-    st.markdown(f"""
-        <div class="info-card">
-            <div class="accent-blue">{L['transport']}</div>
-            <p>🚕 <b>吉野タクシー (Yoshino Taxi):
+    st.markdown(f'<div class="info-card"><div class="accent-blue">{L["transport"]}</div><p>🚕 <b>吉野タクシー (Yoshino Taxi):</b> 0747-52-2025</p><p>🚉 <b>Kintetsu Railway:</b> Koshibe Station (越部駅)</p></div>', unsafe_allow_html=True)
+    st.link_button("🗺 Open Map", "https://www.google.com/maps/search/?api=1&query=Oyodo+Nara", use_container_width=True)
+
+with tab4:
+    st.markdown(f"### {L['support']}")
+    st.markdown(f'<div class="info-card" style="border-left: 8px solid #ff4444;"><div class="accent-blue" style="color:#ff4444 !important;">Direct Contact</div><p style="font-size: 2.5rem; letter-spacing: 2px; font-weight: bold; margin: 10px 0;">080-9419-6063</p><p style="opacity: 0.8;">Owner: Jin</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="info-card"><div class="accent-blue">{L["medical"]}</div><p><b>南奈良総合医療センター</b><br>0747-54-5000</p><p style="margin-top:15px;"><b>中辻医院 (Clinic)</b><br>0747-52-2115</p></div>', unsafe_allow_html=True)
+
+st.markdown("<p style='text-align: center; opacity: 0.3; margin-top: 50px;'>Jin Guest Concierge Service</p>", unsafe_allow_html=True)
