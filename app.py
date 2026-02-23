@@ -14,7 +14,8 @@ LANG_DICT = {
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
         "rule_list": ["室内は完全禁煙です（屋外指定場所のみ可）", "夜22:00以降はお静かにお願いします", "無料の愛車点検・洗車をご希望の方はオーナーまで！"],
-        "guide": "Local Guide",
+        "guide": "Shopping / Dining",
+        "sightseeing": "Sightseeing",
         "shops": "🛒 Shopping",
         "dining": "🍽 Dining",
         "transport": "🚌 Transport / ATM",
@@ -30,7 +31,8 @@ LANG_DICT = {
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
         "rule_list": ["No smoking inside", "Please be quiet after 10 PM", "Free car inspection/wash available on request!"],
-        "guide": "Local Guide",
+        "guide": "Shopping / Dining",
+        "sightseeing": "Sightseeing",
         "shops": "🛒 Shopping",
         "dining": "🍽 Dining",
         "transport": "🚌 Transport / ATM",
@@ -69,7 +71,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 言語選択と変数の事前定義（エラー防止）
+# 言語選択と変数の事前定義
 sel_lang = st.selectbox("🌐 Language", list(LANG_DICT.keys()))
 L = LANG_DICT[sel_lang]
 welcome_txt = L["welcome"]
@@ -79,6 +81,7 @@ checkout_lbl = L["checkout_label"]
 wifi_lbl = L["wifi_label"]
 rules_lbl = L["rules"]
 guide_lbl = L["guide"]
+sight_lbl = L["sightseeing"]
 shops_lbl = L["shops"]
 dining_lbl = L["dining"]
 trans_lbl = L["transport"]
@@ -95,7 +98,7 @@ with col_status:
     st.markdown(f"<div style='text-align: right; font-size: 1.5rem; margin-top: 20px;'>{jst_now.strftime('%H:%M')} | Oyodo, Nara</div>", unsafe_allow_html=True)
 
 # タブ構成
-tab1, tab2, tab3, tab4 = st.tabs(["HOME", "INFO", "GUIDE", "HELP"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["HOME", "INFO", "GUIDE", "SIGHTSEEING", "HELP"])
 
 with tab1:
     st.markdown(f"### {welcome_txt}")
@@ -144,6 +147,7 @@ with tab3:
         st.markdown(f'''
             <div class="info-card">
                 <div class="accent-blue">{shops_lbl}</div>
+                <p><b>キリン堂 大淀桧垣本店 (Kirindo)</b><br><small>Drugstore | 9:00-21:00</small></p>
                 <p><b>ライフ 大淀店 (Life)</b><br><small>Supermarket | 9:00-21:00</small></p>
                 <p><b>ファミリーマート (FamilyMart)</b><br><small>24h / ATM inside</small></p>
             </div>
@@ -152,7 +156,7 @@ with tab3:
         st.markdown(f'''
             <div class="info-card">
                 <div class="accent-blue">{dining_lbl}</div>
-                <p><b>赤影 / 鳥欽</b><br><small>Yakitori</small></p>
+                <p><b>赤影 / 鳥欽</b><br><small>Yakitori (Recommended!)</small></p>
                 <p><b>和光 (Wako)</b><br><small>Sushi</small></p>
             </div>
         ''', unsafe_allow_html=True)
@@ -160,7 +164,7 @@ with tab3:
     st.markdown(f'''
         <div class="info-card">
             <div class="accent-blue">{trans_lbl}</div>
-            <p>🚕 <b>近鉄タクシー (Kintetsu Taxi):</b><br><span style="font-size:1.8rem; font-weight:bold;">0747-53-2331</span></p>
+            <p>🚕 <b>吉野タクシー (Yoshino Taxi):</b><br><span style="font-size:1.8rem; font-weight:bold;">0746-32-2961</span></p>
             <hr style="opacity:0.2">
             <p>🚉 <b>越部駅 / 下市口駅</b><br>
             <a href="https://www.kintetsu.co.jp/station/station_info/station16021.html" target="_blank" style="color:#00aaff; text-decoration:none; font-weight:bold;">→ 近鉄公式・駅情報/時刻表</a></p>
@@ -168,13 +172,26 @@ with tab3:
     ''', unsafe_allow_html=True)
 
 with tab4:
+    st.markdown(f"### {sight_lbl}")
+    st.markdown(f'''
+        <div class="info-card">
+            <div class="accent-blue">📍 近隣のおすすめスポット</div>
+            <p><b>道の駅 吉野路大淀iセンター</b><br><small>地元の特産品や「ヤマトポーク」のグルメが楽しめます。車で約10分。</small></p>
+            <p><b>博水園 (Hakusuien) / 龍水園</b><br><small>大阿太高原の梨狩り体験。旬の季節（8月〜10月）には最高においしい梨が味わえます。</small></p>
+            <hr style="opacity:0.2">
+            <div class="accent-blue">🌸 吉野山エリア (Yoshino Mountain)</div>
+            <p><b>金峯山寺 (Kinpusen-ji)</b><br><small>世界遺産。巨大な青い「蔵王権現像」は必見。宿から車で約20-30分。</small></p>
+            <p><b>吉野山ロープウェイ</b><br><small>日本最古のロープウェイ。桜や紅葉の絶景ポイントです。</small></p>
+        </div>
+    ''', unsafe_allow_html=True)
+
+with tab5:
     st.markdown(f"### {supp_lbl}")
     st.markdown(f'''
         <div class="info-card" style="border-left: 8px solid #ff4444;">
             <div class="accent-blue" style="color:#ff4444 !important;">Direct Contact</div>
             <p style="font-size: 2.2rem; font-weight: bold; margin: 10px 0;">080-9419-6063</p>
             <p style="opacity: 0.9;">Owner: <b>Hitoshi Kobayashi</b></p>
-            <p style="font-size: 0.9rem; opacity: 0.7;">Email: jin-oyodo@kcn.jp</p>
         </div>
         <div class="info-card">
             <div class="accent-blue">{med_lbl}</div>
