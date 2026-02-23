@@ -99,9 +99,26 @@ st.markdown("""
         padding: 30px; border-radius: 12px; border-left: 8px solid #00aaff;
         text-align: center; margin: 20px 0;
     }
+    .checkout-text {
+        color: #ffffff !important; 
+        font-size: 1.5rem; 
+        font-weight: bold; 
+        margin-bottom: 10px;
+    }
     .accent-blue { color: #00aaff; font-weight: bold; font-size: 1.5rem; margin-bottom: 10px; }
-    .big-value { font-size: 3rem; font-weight: bold; color: white; }
+    .big-value { font-size: 3.5rem; font-weight: bold; color: white; }
     .rule-item { margin-bottom: 15px; font-size: 1.4rem; border-left: 3px solid #00aaff; padding-left: 15px; }
+    .timetable-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #00aaff;
+        color: white !important;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 5px;
+        font-size: 1.1rem;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -122,7 +139,15 @@ tab1, tab2, tab3, tab4 = st.tabs(["HOME", "INFO", "GUIDE", "HELP"])
 
 with tab1:
     st.markdown(f"### {L['welcome']}")
-    st.markdown(f'<div class="info-card"><p style="font-size: 1.5rem; line-height: 1.6;">{L["desc"]}</p><div class="checkout-highlight"><div style="font-size: 1.4rem; opacity: 0.9; margin-bottom:5px;">{L["checkout_label"]}</div><div class="big-value">10:00 AM</div></div></div>', unsafe_allow_html=True)
+    st.markdown(f"""
+        <div class="info-card">
+            <p style="font-size: 1.5rem; line-height: 1.6;">{L["desc"]}</p>
+            <div class="checkout-highlight">
+                <div class="checkout-text">{L["checkout_label"]}</div>
+                <div class="big-value">10:00 AM</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 with tab2:
     st.markdown(f"### {L['wifi_label']} & Rules")
@@ -141,7 +166,18 @@ with tab3:
     with c_b:
         st.markdown(f'<div class="info-card"><div class="accent-blue">{L["dining"]}</div><p><b>赤影 / 鳥欽 (Akakage/Torikin)</b><br><small>Yakitori (Grilled Chicken)</small></p><p><b>和光 (Wako)</b><br><small>Traditional Sushi</small></p></div>', unsafe_allow_html=True)
     
-    st.markdown(f'<div class="info-card"><div class="accent-blue">{L["transport"]}</div><p>🚕 <b>近鉄タクシー (Kintetsu Taxi):</b><br><span style="font-size:1.8rem; font-weight:bold;">0747-53-2331</span></p><hr style="opacity:0.2"><p>🚉 <b>越部駅 (Koshibe Station)</b><br><a href="https://www.kintetsu.co.jp/rakuraku/t_koshibe.html" target="_blank" style="color:#00aaff;">→ 時刻表 / Timetable</a></p><p>🚉 <b>下市口駅 (Shimoichiguchi Station)</b><br><small>※特急停車駅 / Limited Express Stop</small><br><a href="https://www.kintetsu.co.jp/rakuraku/t_shimoichiguchi.html" target="_blank" style="color:#00aaff;">→ 時刻表 / Timetable</a></p></div>', unsafe_allow_html=True)
+    st.markdown(f"""
+        <div class="info-card">
+            <div class="accent-blue">{L['transport']}</div>
+            <p>🚕 <b>近鉄タクシー (Kintetsu Taxi):</b><br><span style="font-size:1.8rem; font-weight:bold;">0747-53-2331</span></p>
+            <hr style="opacity:0.2">
+            <p>🚉 <b>越部駅 (Koshibe Station)</b><br>
+            <a href="https://www.kintetsu.co.jp/station/station_info/station16021.html" class="timetable-btn" target="_blank">時刻表 / Timetable</a></p>
+            <p style="margin-top:15px;">🚉 <b>下市口駅 (Shimoichiguchi Station)</b><br>
+            <small>※特急停車駅 / Limited Express Stop</small><br>
+            <a href="https://www.kintetsu.co.jp/station/station_info/station16022.html" class="timetable-btn" target="_blank">時刻表 / Timetable</a></p>
+        </div>
+    """, unsafe_allow_html=True)
 
 with tab4:
     st.markdown(f"### {L['support']}")
