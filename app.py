@@ -76,3 +76,38 @@ with tab2:
         st.markdown('</div>', unsafe_allow_html=True)
 
     st.write("---")
+    st.markdown('<p class="accent">Railway Connection</p>', unsafe_allow_html=True)
+    st.link_button("🚉 近鉄 越部駅 時刻表 (徒歩約4分)", "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E52")
+    st.link_button("🚉 近鉄 下市口駅 時刻表 (車約4分)", "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E54")
+    
+    st.write("---")
+    st.markdown('<p class="accent">In-Flight Etiquette</p>', unsafe_allow_html=True)
+    st.write("吉野の静寂な夜を愉しむため、22時以降は少しだけお静かにお過ごしください。")
+
+with tab3:
+    st.markdown('<p class="accent">Entertainment (Sightseeing)</p>', unsafe_allow_html=True)
+    st.link_button("🌲 道の駅 吉野路大淀iセンター", "https://yoshinoji-oyodo.com/")
+    st.link_button("🌸 金峯山寺 (蔵王権現 拝観)", "https://www.kinpusen.or.jp/")
+    st.link_button("⛩ 吉野神宮 (公式リンク修正済)", "https://yoshinojingu.jp/")
+    st.link_button("🐎 丹生川上神社 下社", "https://niukawakami-jinja.jp/")
+    st.link_button("🚠 吉野山ロープウェイ", "https://www.yoshino-ropeway.jp/")
+
+with tab4:
+    st.markdown('<div class="monitor-frame" style="border: 2px solid #ff4444;">', unsafe_allow_html=True)
+    st.markdown('<p style="color:#ff4444;font-weight:bold;">🆘 ASSISTANCE / CALL BUTTON</p>', unsafe_allow_html=True)
+    st.write("何かお困りの際は、お電話または対面にていつでも**オーナーをお呼び出しください**。")
+    st.markdown('<h2 style="color:white;margin:10px 0;">080-9419-6063</h2>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        st.markdown('<p class="accent">Taxi (近鉄配車センター)</p>', unsafe_allow_html=True)
+        st.write("☎︎ **0745-77-2101**")
+        st.caption("中和近鉄タクシー (大淀エリア)")
+    with col_t2:
+        st.markdown('<p class="accent">Medical Support</p>', unsafe_allow_html=True)
+        st.write("南奈良医療センター: 0747-54-5000")
+        st.write("中辻医院: 0747-52-2115")
+
+st.write("---")
+st.caption("Jin Premium In-Flight Entertainment System | Developed for Owners Excellence")
