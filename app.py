@@ -12,60 +12,59 @@ LANG_DICT = {
         "checkout_label": "Check-out / チェックアウト",
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
-        "rule_list": ["室内は完全禁煙です（屋外指定場所のみ可）", "夜22:00以降はお静かにお願いします", "無料の愛車点検・洗車をご希望の方はオーナーまで！"],
-        "guide": "Shopping / Dining",
-        "sightseeing": "Sightseeing",
-        "shops": "🛒 Shopping",
-        "dining": "🍽 Dining",
-        "transport": "🚌 Transport / ATM",
+        "rule_list": ["室内は完全禁煙です", "夜22:00以降はお静かに", "無料の愛車点検・洗車はオーナーまで！"],
+        "guide": "Guide",
+        "sight": "Sightseeing",
         "support": "Support",
-        "medical": "Medical",
-        "staff_info": "Staff Information"
+        "staff": "Staff Information"
     },
     "English": {
         "welcome": "Welcome to Jin",
-        "desc": "A cozy hideaway in Yoshino, run by a multi-talented owner and his Thai wife.",
+        "desc": "A cozy hideaway in Yoshino, run by a talented owner and his Thai wife.",
         "checkout_label": "Check-out",
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
-        "rule_list": ["No smoking inside", "Please be quiet after 10 PM", "Free car inspection/wash available on request!"],
-        "guide": "Shopping / Dining",
-        "sightseeing": "Sightseeing",
-        "shops": "🛒 Shopping",
-        "dining": "🍽 Dining",
-        "transport": "🚌 Transport / ATM",
+        "rule_list": ["No smoking inside", "Quiet after 10 PM", "Free car wash: Ask owner!"],
+        "guide": "Guide",
+        "sight": "Sightseeing",
         "support": "Support",
-        "medical": "Medical",
-        "staff_info": "Meet Our Staff"
+        "staff": "Staff Information"
     }
 }
 
-# 3. CSSデザイン設定（変数に格納してエラーを防ぐ）
-STYLE_CSS = """
-<style>
-    .main { background-color: #002255; color: white; font-family: 'Helvetica Neue', Arial, sans-serif; }
-    .stTabs [data-baseweb="tab-list"] { background-color: transparent; gap: 10px; }
-    .stTabs [data-baseweb="tab"] { 
-        background-color: rgba(255, 255, 255, 0.05); border-radius: 8px 8px 0 0; 
-        color: #ccddee !important; font-size: 1.4rem !important; border: none !important;
-    }
-    .stTabs [aria-selected="true"] { 
-        background-color: #004488 !important; border-bottom: 2px solid #00aaff !important; color: white !important;
-    }
-    .info-card { 
-        background: rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 15px; 
-        border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 15px;
-    }
-    .checkout-highlight {
-        background: linear-gradient(90deg, #004488, #002255);
-        padding: 25px; border-radius: 12px; border-left: 8px solid #00aaff;
-        text-align: center; margin: 15px 0;
-    }
-    .accent-blue { color: #00aaff; font-weight: bold; font-size: 1.5rem; margin-bottom: 10px; }
-    .big-value { font-size: 3rem; font-weight: bold; color: white; }
-    .map-btn {
-        display: inline-block; padding: 6px 14px; background: #00aaff; color: white !important;
-        text-decoration: none; border-radius: 5px; font-size: 0.9rem; margin-top: 8px; font-weight: bold;
-    }
-    .rule-item { margin-bottom: 10px; font-size: 1.3rem; border-left: 3px solid #00aaff; padding-left: 15px; }
-    .staff-box { background: rgba(0, 170, 255, 0.1); padding: 20px; border-radius: 10px; margin-top: 10px; border:
+# 3. CSSデザイン（エラー回避のためシンプルに記述）
+st.markdown("<style>.main { background-color: #002255; color: white; } .info-card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); } .accent { color: #00aaff; font-weight: bold; font-size: 1.2rem; } .map-link { color: #00aaff !important; text-decoration: none; font-weight: bold; }</style>", unsafe_allow_html=True)
+
+# 4. 言語選択
+sel_lang = st.selectbox("🌐 Language", list(LANG_DICT.keys()))
+L = LANG_DICT[sel_lang]
+
+# 5. ヘッダー
+col_t, col_s = st.columns([3, 2])
+with col_t:
+    st.header("✈︎ Jin")
+with col_s:
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    st.write(f"{now.strftime('%H:%M')} | Oyodo, Nara")
+
+# 6. タブ構成
+tab1, tab2, tab3, tab4 = st.tabs(["HOME", "INFO", "GUIDE", "HELP"])
+
+with tab1:
+    st.subheader(L["welcome"])
+    st.markdown(f'<div class="info-card"><p>{L["desc"]}</p><div style="background: #004488; padding: 15px; border-radius: 10px; text-align: center;"><div style="font-size: 1.2rem;">{L["checkout_label"]}</div><div style="font-size: 2.5rem; font-weight: bold;">10:00 AM</div></div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="info-card"><div class="accent">{L["staff"]}</div><p>👨‍✈️ <b>Hitoshi Kobayashi</b><br>元鉄道運転士・元タクシー運転手<br>👩‍🏫 <b>Nisachol</b><br>Thai Teacher (English/Thai OK)</p></div>', unsafe_allow_html=True)
+
+with tab2:
+    st.subheader(L["wifi_label"])
+    st.markdown(f'<div class="info-card"><div class="accent">Wi-Fi</div><p>SSID: <b>Deco_C884</b><br>PW: <b>Q99srAe5</b></p></div>', unsafe_allow_html=True)
+    rules_html = "".join([f"<li>{r}</li>" for r in L["rule_list"]])
+    st.markdown(f'<div class="info-card"><div class="accent">{L["rules"]}</div><ul>{rules_html}</ul></div>', unsafe_allow_html=True)
+
+with tab3:
+    st.subheader(L["guide"])
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown(f'<div class="info-card"><div class="accent">🛒 Shopping</div><b>キリン堂 大淀桧垣本店</b><br><a href="https://www.google.com/maps/search/?api=1&query=キリン堂+大淀桧垣本店" class="map-link">📍 Map</a><br><br><b>ライフ 大淀店</b><br><a href="https://www.google.com/maps/search/?api=1&query=ライフ+大淀店" class="map-link">📍 Map</a></div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown(f'<div class="info-card">
