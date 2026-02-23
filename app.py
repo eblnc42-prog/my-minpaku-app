@@ -1,44 +1,69 @@
 import streamlit as st
 
-# iPadの画面幅に合わせる設定
-st.set_page_config(layout="wide", page_title="大淀・宿コンシェルジュ")
+# アプリの設定
+st.set_page_config(page_title="Jin Guest Guide", layout="wide")
 
-# サイドメニュー
-st.sidebar.title("🏨 Guest Guide")
-menu = st.sidebar.radio(
-    "メニューを選んでください",
-    ["Welcome", "Wi-Fi & Rules", "How to Use", "Local Map", "Contact"]
-)
+# カスタムCSSでデザインを少し整える（文字を大きく、読みやすく）
+st.markdown("""
+    <style>
+    .main {
+        background-color: #f8f9fa;
+    }
+    .stTitle {
+        color: #2e5077;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-# 各ページの内容
-if menu == "Welcome":
-    st.header("ようこそ、大淀町の我が家へ")
-    st.image("https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e", caption="吉野の風景") # サンプル画像
-    st.write("吉野の玄関口、大淀町での滞在をごゆっくりお楽しみください。")
-    st.info("チェックアウト時間は 10:00 AM です。")
+# タイトル
+st.title("🏡 Welcome to Jin")
+st.write("大淀町でのご滞在をサポートするデジタルガイドです。")
 
-elif menu == "Wi-Fi & Rules":
-    st.header("📶 Wi-Fi & 📝 ルール")
+# タブの作成（iPadでタップしやすい）
+tab1, tab2, tab3 = st.tabs(["🏠 ホーム", "📶 Wi-Fi / 📝 ルール", "📍 周辺ガイド"])
+
+with tab1:
+    st.header("ようこそ、宿「Jin」へ")
+    st.write("吉野の玄関口、大淀町へお越しいただきありがとうございます。")
+    st.write("何かお困りのことがあれば、お気軽にオーナーまでお知らせください。")
+    
+    st.divider()
+    
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("Wi-Fi")
-        st.code("SSID: Oyodo_Guest_WiFi\nPASS: yoshino2024", language="")
+        st.metric(label="チェックアウト時間", value="10:00 AM")
     with col2:
-        st.subheader("基本ルール")
-        st.write("・室内は完全禁煙です\n・夜22時以降はお静かに\n・ゴミは分別してキッチン横へ")
+        if st.button("お祝いのバルーンを飛ばす 🎈"):
+            st.balloons()
 
-elif menu == "How to Use":
-    st.header("♨ 設備の使い方")
-    device = st.selectbox("設備を選択", ["お風呂・給湯器", "エアコン", "キッチン・IH"])
-    st.write(f"{device} の使い方はこちらです。")
-    # ここに画像や動画のリンクを貼ることができます
+with tab2:
+    st.header("📶 接続・滞在ルール")
+    
+    # Wi-Fi情報を目立つように表示
+    st.success(f"""
+    **Wi-Fi ネットワーク情報**
+    - SSID: Jin_Guest_WiFi (※または現在のSSID)
+    - Password: **Q99srAe5**
+    """)
+    
+    st.divider()
+    
+    st.subheader("⚠️ 宿のルール")
+    st.write("- **チェックアウト:** 10:00までにお願いします。")
+    st.write("- **全館禁煙:** お煙草は指定の場所（あれば）でお願いします。")
+    st.write("- **静穏時間:** 夜22時以降は近隣へのご配慮をお願いします。")
 
-elif menu == "Local Map":
-    st.header("📍 周辺案内（大淀・吉野）")
-    st.write("オーナーが実際に通うおすすめスポットです。")
-    # Google Mapの埋め込みなどが可能です
+with tab3:
+    st.header("📍 周辺のおすすめ")
+    st.write("大淀町・吉野エリアのオーナー厳選スポットです。")
+    
+    # ここにGoogleマップへのリンクなどを作っていけます
+    st.info("※現在、おすすめスポットを準備中です。")
+    
+    # リンクボタンの例
+    st.link_button("Googleマップで周辺を見る", "https://www.google.com/maps/search/?api=1&query=奈良県吉野郡大淀町")
 
-elif menu == "Contact":
-    st.header("📞 お困りですか？")
-    st.button("オーナーのLINEを開く")
-    st.write("緊急時は 090-XXXX-XXXX までお電話ください。")
+# フッター
+st.sidebar.markdown("---")
+st.sidebar.write("宿 Jin オーナー")
