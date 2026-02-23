@@ -1,75 +1,61 @@
 import streamlit as st
 import datetime
 
-# --- 設定 ---
-st.set_page_config(page_title="Jin", layout="wide")
+# ページ設定
+st.set_page_config(page_title="Jin Guest Concierge", layout="wide")
 
-# --- リンク定義（行を短く保つため） ---
-U_K = "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E52"
-U_S = "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E54"
-U_M = "https://yoshinoji-oyodo.com/"
-U_H = "https://hakusuien.com/"
-U_Y = "https://www.kinpusen.or.jp/"
+# 言語データ（元のリッチな説明文を復元）
+LANG_DICT = {
+    "日本語": {
+        "welcome": "Welcome to Jin",
+        "desc": "40の資格を持つオーナーと、タイ出身の元教師の妻が営む、吉野の隠れ家へようこそ。無料の愛車点検や洗車サービスも承っております。",
+        "checkout_label": "Check-out / チェックアウト",
+        "wifi_label": "Wi-Fi 情報",
+        "rules": "ハウスルール",
+        "rule_list": [
+            "室内は完全禁煙です（屋外の指定場所をご利用ください）",
+            "夜22:00以降はお静かにお願いいたします",
+            "愛車点検・洗車をご希望の方は、お気軽にオーナーまで！"
+        ],
+        "shops": "🛒 お買い物",
+        "dining": "🍽 お食事",
+        "transport": "🚌 交通・時刻表",
+        "sightseeing": "🌸 観光情報",
+        "support": "緊急連絡・サポート"
+    },
+    "English": {
+        "welcome": "Welcome to Jin",
+        "desc": "A cozy hideaway in Yoshino, run by a multi-talented owner (holding 40 certifications) and his Thai wife, a former teacher.",
+        "checkout_label": "Check-out",
+        "wifi_label": "Wi-Fi Information",
+        "rules": "House Rules",
+        "rule_list": [
+            "No smoking inside (Please use the designated outdoor area)",
+            "Please be quiet after 10 PM",
+            "Free car inspection or wash available! Please ask the owner."
+        ],
+        "shops": "🛒 Shopping",
+        "dining": "🍽 Dining",
+        "transport": "🚌 Transport",
+        "sightseeing": "🌸 Sightseeing",
+        "support": "Support"
+    }
+}
 
-# --- 表示 ---
-lang = st.selectbox("Language", ["日本語", "English"])
-
-st.title("✈︎ Jin")
-now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
-st.write(now.strftime("%H:%M") + " | Oyodo, Nara")
-
-t1, t2, t3, t4 = st.tabs(["🏠", "📶", "🗺️", "🆘"])
-
-with t1:
-    if lang == "日本語":
-        st.subheader("Welcome to Jin")
-        st.info("資格40保持のオーナーとタイ人妻の宿へようこそ")
-        st.metric("Check-out", "10:00 AM")
-        st.write("---")
-        st.write("👨‍✈️ 小林 斉 (元運転士/整備士)")
-        st.write("👩‍🏫 Nisachol (元英語教師)")
-    else:
-        st.subheader("Welcome to Jin")
-        st.info("Run by a multi-talented owner and his Thai wife.")
-        st.metric("Check-out", "10:00 AM")
-
-with t2:
-    st.subheader("Wi-Fi & Rules")
-    st.success("SSID: Deco_C884 / PW: Q99srAe5")
-    st.write("---")
-    st.write("- 禁煙 (No Smoking)")
-    st.write("- 22時以降消音 (Quiet after 10PM)")
-    st.write("- ✨洗車/点検はオーナーまで！")
-
-with t3:
-    st.subheader("Guide")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.write("**キリン堂**")
-        st.link_button("Map1", "https://maps.google.com/?q=Kirindo_Oyodo")
-        st.write("**ライフ**")
-        st.link_button("Map2", "https://maps.google.com/?q=Life_Oyodo")
-    with c2:
-        st.write("**赤影/鳥欽**")
-        st.link_button("Map3", "https://maps.google.com/?q=Akakage_Oyodo")
-        st.write("**和光**")
-        st.link_button("Map4", "https://maps.google.com/?q=Wako_Sushi_Oyodo")
-
-    st.write("---")
-    st.warning("吉野タクシー: 0746-32-2961")
-    st.link_button("越部駅時刻表", U_K)
-    st.link_button("下市口駅時刻表", U_S)
-    
-    st.write("---")
-    st.link_button("道の駅", U_M)
-    st.link_button("梨狩り", U_H)
-    st.link_button("吉野山", U_Y)
-
-with t4:
-    st.subheader("Support")
-    st.error("Owner: 080-9419-6063")
-    st.write("---")
-    st.write("南奈良医療センター: 0747-54-5000")
-    st.write("中辻医院: 0747-52-2115")
-
-st.caption("Jin Guest Concierge")
+# デザインCSS
+st.markdown("""
+<style>
+    .main { background-color: #002255; color: white; }
+    .stTabs [data-baseweb="tab"] { color: #ccddee !important; font-size: 1.2rem !important; }
+    .info-card { 
+        background: rgba(255, 255, 255, 0.08); padding: 25px; border-radius: 15px; 
+        border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 20px;
+    }
+    .accent-blue { color: #00aaff; font-weight: bold; font-size: 1.3rem; margin-bottom: 10px; }
+    .checkout-highlight {
+        background: linear-gradient(90deg, #004488, #002255);
+        padding: 20px; border-radius: 12px; border-left: 8px solid #00aaff;
+        text-align: center; margin: 15px 0;
+    }
+    .staff-box { 
+        background: rgba(0, 170, 255, 0.1); padding: 15px; border-radius: 1
