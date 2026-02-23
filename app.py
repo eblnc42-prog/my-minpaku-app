@@ -9,10 +9,10 @@ LANG_DICT = {
     "日本語": {
         "welcome": "Welcome to Jin",
         "desc": "吉野の入り口、大淀町でのひとときを。宿「Jin」は、お客様の快適な旅をサポートします。",
-        "checkout_label": "Check-out Time",
+        "checkout_label": "Check-out / チェックアウト",
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
-        "rule_list": ["室内は完全禁煙です", "喫煙は敷地内の指定場所（屋外）で可能です", "夜22:00以降はお静かにお願いします"],
+        "rule_list": ["室内は完全禁煙です（喫煙は屋外の指定場所でお願いします）", "夜22:00以降はお静かにお願いします"],
         "guide": "Local Guide",
         "shops": "🛒 Shopping",
         "dining": "🍽 Dining",
@@ -26,7 +26,7 @@ LANG_DICT = {
         "checkout_label": "Check-out Time",
         "wifi_label": "Wi-Fi Info",
         "rules": "House Rules",
-        "rule_list": ["No smoking inside", "Smoking allowed in designated outdoor areas only", "Please be quiet after 10 PM"],
+        "rule_list": ["No smoking inside (Designated outdoor areas only)", "Please be quiet after 10 PM"],
         "guide": "Local Guide",
         "shops": "🛒 Shopping",
         "dining": "🍽 Dining",
@@ -40,7 +40,7 @@ LANG_DICT = {
         "checkout_label": "Heure de départ",
         "wifi_label": "Wi-Fi Info",
         "rules": "Règlement",
-        "rule_list": ["Interdiction de fumer à l'intérieur", "Fumer est autorisé uniquement à l'extérieur", "Pas de bruit après 22h"],
+        "rule_list": ["Interdiction de fumer à l'intérieur (Espaces extérieurs uniquement)", "Pas de bruit après 22h"],
         "guide": "Guide Local",
         "shops": "🛒 Shopping",
         "dining": "🍽 Restaurants",
@@ -54,7 +54,7 @@ LANG_DICT = {
         "checkout_label": "退房时间",
         "wifi_label": "Wi-Fi 信息",
         "rules": "住宿规则",
-        "rule_list": ["室内禁止吸烟", "仅限在室外指定区域吸烟", "晚上22点后请保持安静"],
+        "rule_list": ["室内禁止吸烟（仅限在室外指定区域吸烟）", "晚上22点后请保持安静"],
         "guide": "周边指南",
         "shops": "🛒 购物",
         "dining": "🍽 餐厅",
@@ -68,7 +68,7 @@ LANG_DICT = {
         "checkout_label": "เวลาเช็คเอาท์",
         "wifi_label": "ข้อมูล Wi-Fi",
         "rules": "กฎระเบียบ",
-        "rule_list": ["ห้ามสูบบุหรี่ภายในห้องพัก", "อนุญาตให้สูบบุหรี่ในพื้นที่กลางแจ้งเท่านั้น", "งดใช้เสียงดังหลัง 22:00 น."],
+        "rule_list": ["ห้ามสูบบุหรี่ภายในห้องพัก (อนุญาตเฉพาะพื้นที่กลางแจ้งที่กำหนด)", "งดใช้เสียงดังหลัง 22:00 น."],
         "guide": "คำแนะนำ",
         "shops": "🛒 แหล่งช้อปปิ้ง",
         "dining": "🍽 ร้านอาหาร",
@@ -78,7 +78,7 @@ LANG_DICT = {
     }
 }
 
-# デザイン修正（青い四角や重なった丸を解消）
+# デザイン修正
 st.markdown("""
     <style>
     .main { background-color: #002255; color: white; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -109,7 +109,7 @@ st.markdown("""
 sel_lang = st.selectbox("🌐 Language Selection / 言語選択", list(LANG_DICT.keys()))
 L = LANG_DICT[sel_lang]
 
-# ヘッダー（日本時間）
+# ヘッダー
 col_title, col_status = st.columns([3, 2])
 with col_title:
     st.markdown("<h1 style='margin-bottom:0;'>✈︎ Jin</h1>", unsafe_allow_html=True)
@@ -122,7 +122,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["HOME", "INFO", "GUIDE", "HELP"])
 
 with tab1:
     st.markdown(f"### {L['welcome']}")
-    st.markdown(f'<div class="info-card"><p style="font-size: 1.5rem; line-height: 1.6;">{L["desc"]}</p><div class="checkout-highlight"><div style="font-size: 1.2rem; opacity: 0.8;">{L["checkout_label"]}</div><div class="big-value">10:00 AM</div></div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="info-card"><p style="font-size: 1.5rem; line-height: 1.6;">{L["desc"]}</p><div class="checkout-highlight"><div style="font-size: 1.4rem; opacity: 0.9; margin-bottom:5px;">{L["checkout_label"]}</div><div class="big-value">10:00 AM</div></div></div>', unsafe_allow_html=True)
 
 with tab2:
     st.markdown(f"### {L['wifi_label']} & Rules")
@@ -137,12 +137,11 @@ with tab3:
     st.markdown(f"### {L['guide']}")
     c_a, c_b = st.columns(2)
     with c_a:
-        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["shops"]}</div><p><b>ライフ 大淀店 (Life)</b><br><small>Supermarket | 9:00-21:00</small></p><p><b>ファミリーマート (FamilyMart)</b><br><small>Convenience Store | 24h (ATM inside)</small></p></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="info-card"><div class="accent-blue">{L["shops"]}</div><p><b>ライフ 大淀店 (Life)</b><br><small>Supermarket | 9:00-21:00</small></p><p><b>ファミリーマート (FamilyMart)</b><br><small>Convenience Store (ATM inside)</small></p></div>', unsafe_allow_html=True)
     with c_b:
         st.markdown(f'<div class="info-card"><div class="accent-blue">{L["dining"]}</div><p><b>赤影 / 鳥欽 (Akakage/Torikin)</b><br><small>Yakitori (Grilled Chicken)</small></p><p><b>和光 (Wako)</b><br><small>Traditional Sushi</small></p></div>', unsafe_allow_html=True)
     
-    st.markdown(f'<div class="info-card"><div class="accent-blue">{L["transport"]}</div><p>🚕 <b>吉野タクシー (Yoshino Taxi):</b> 0747-52-2025</p><p>🚉 <b>Kintetsu Railway:</b> Koshibe Station (越部駅)</p></div>', unsafe_allow_html=True)
-    st.link_button("🗺 Open Map", "https://www.google.com/maps/search/?api=1&query=Oyodo+Nara", use_container_width=True)
+    st.markdown(f'<div class="info-card"><div class="accent-blue">{L["transport"]}</div><p>🚕 <b>近鉄タクシー (Kintetsu Taxi):</b><br><span style="font-size:1.8rem; font-weight:bold;">0747-53-2331</span></p><hr style="opacity:0.2"><p>🚉 <b>越部駅 (Koshibe Station)</b><br><a href="https://www.kintetsu.co.jp/rakuraku/t_koshibe.html" target="_blank" style="color:#00aaff;">→ 時刻表 / Timetable</a></p><p>🚉 <b>下市口駅 (Shimoichiguchi Station)</b><br><small>※特急停車駅 / Limited Express Stop</small><br><a href="https://www.kintetsu.co.jp/rakuraku/t_shimoichiguchi.html" target="_blank" style="color:#00aaff;">→ 時刻表 / Timetable</a></p></div>', unsafe_allow_html=True)
 
 with tab4:
     st.markdown(f"### {L['support']}")
