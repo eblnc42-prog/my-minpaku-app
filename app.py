@@ -1,62 +1,69 @@
 import streamlit as st
 import datetime
 
-# --- ページ設定 ---
-st.set_page_config(page_title="Jin Premium Concierge", layout="wide")
+# --- 1. ページ基本設定 ---
+st.set_page_config(page_title="Jin Premium", layout="wide")
 
-# --- デザイン（ANA風プレミアムブルー） ---
-# エラー防止のため、CSSを短い文字列で分割して読み込みます
-st.markdown('<style>.main{background-color:#002255;color:white;font-family:"Arial",sans-serif;}</style>', unsafe_allow_html=True)
-st.markdown('<style>.stTabs [data-baseweb="tab-list"]{background-color:#001a40;}</style>', unsafe_allow_html=True)
-st.markdown('<style>.info-card{background:rgba(255,255,255,0.05);padding:25px;border-radius:5px;border-left:5px solid #00aaff;margin-bottom:20px;}</style>', unsafe_allow_html=True)
-st.markdown('<style>.premium-button{background-color:#00aaff;color:white;padding:10px;border-radius:3px;text-align:center;font-weight:bold;}</style>', unsafe_allow_html=True)
+# --- 2. ANAプレミアム・デザイン (CSS) ---
+# エラー防止のため極限まで短く分割
+st.markdown('<style>.main{background-color:#002255;color:white;}</style>', unsafe_allow_html=True)
+st.markdown('<style>.card{background:rgba(255,255,255,0.05);padding:20px;border-left:5px solid #00aaff;margin-bottom:20px;}</style>', unsafe_allow_html=True)
+st.markdown('<style>.accent{color:#00aaff;font-weight:bold;}</style>', unsafe_allow_html=True)
 
-# --- 言語選択 ---
-lang = st.sidebar.selectbox("🌐 Language Select", ["日本語", "English"])
+# --- 3. 言語と時計 ---
+lang = st.sidebar.selectbox("Language", ["日本語", "English"])
+jst = datetime.timezone(datetime.timedelta(hours=9))
+time_str = datetime.datetime.now(jst).strftime("%H:%M")
 
-# --- ヘッダー（航空機のキャビンイメージ） ---
-col1, col2 = st.columns([3, 1])
-with col1:
-    st.markdown('<h1 style="color:#ffffff;letter-spacing:3px;">✈︎ JIN PREMIUM CONCIERGE</h1>', unsafe_allow_html=True)
-with col2:
-    jst = datetime.timezone(datetime.timedelta(hours=9))
-    now = datetime.datetime.now(jst)
-    st.markdown(f'<p style="text-align:right;color:#00aaff;">Local Time: {now.strftime("%H:%M")}</p>', unsafe_allow_html=True)
+# --- 4. ヘッダー ---
+st.markdown('<h2 style="letter-spacing:4px;">✈︎ JIN PREMIUM</h2>', unsafe_allow_html=True)
+st.markdown(f'<p style="color:#00aaff;">Local Time: {time_str}</p>', unsafe_allow_html=True)
 
-# --- メインコンテンツ ---
-tab1, tab2, tab3, tab4 = st.tabs(["BOARDING", "IN-FLIGHT INFO", "DESTINATION", "CONTACT"])
+# --- 5. メインメニュー ---
+t1, t2, t3, t4 = st.tabs(["BOARDING", "INFO", "GUIDE", "HELP"])
 
-with tab1:
+with t1:
     if lang == "日本語":
         st.markdown('### Welcome to Jin')
-        st.markdown('<div class="info-card"><h4>吉野の隠れ家へ、ようこそ</h4><p>40の資格を持つプロフェッショナルなオーナーと、タイ出身の元英語教師の妻が、真心を込めてお迎えいたします。</p></div>', unsafe_allow_html=True)
-        
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown('<div class="info-card"><b style="color:#00aaff;">CHECK-OUT</b><br><span style="font-size:30px;font-weight:bold;">10:00 AM</span></div>', unsafe_allow_html=True)
-        with c2:
-            st.markdown('<div class="info-card"><b style="color:#00aaff;">SPECIAL SERVICE</b><br>無料の愛車点検・洗車をご希望の方は、オーナーまでお申し付けください。</div>', unsafe_allow_html=True)
-        
-        st.markdown('<div class="info-card"><b>STAFF</b><br>👨‍✈️ 小林 斉（元鉄道運転士・元タクシー運転手・一級整備士等、40資格保持）<br>👩‍🏫 Nisachol（タイ出身・元英語教師 / Thai & English OK）</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><b>吉野の隠れ家へ、ようこそ</b><br>40の資格を持つプロオーナーと、タイ出身の元教師の妻が営む宿です。</div>', unsafe_allow_html=True)
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.markdown('<div class="card"><p class="accent">CHECK-OUT</p><h3>10:00 AM</h3></div>', unsafe_allow_html=True)
+        with col_b:
+            st.markdown('<div class="card"><p class="accent">SERVICE</p>愛車の無料点検・洗車承ります</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><p class="accent">STAFF</p>👨‍✈️ 斉 (元運転士・整備士)<br>👩‍🏫 Nisachol (Thai/English OK)</div>', unsafe_allow_html=True)
     else:
         st.markdown('### Welcome to Jin')
-        st.markdown('<div class="info-card"><h4>A High-Quality Hideaway in Yoshino</h4><p>Run by an owner with 40 professional qualifications and his Thai wife, a former English teacher.</p></div>', unsafe_allow_html=True)
-        st.markdown('<div class="info-card"><b style="color:#00aaff;">CHECK-OUT</b><br><span style="font-size:30px;font-weight:bold;">10:00 AM</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card">Run by an owner with 40 licenses and his Thai wife.</div>', unsafe_allow_html=True)
+        st.info("Check-out: 10:00 AM")
 
-with tab2:
-    st.markdown('### Wi-Fi & House Rules')
-    st.success("📶 SSID: Deco_C884  |  Pass: Q99srAe5")
-    
-    st.markdown('<div class="info-card"><b>HOUSE RULES</b><br>1. 室内は完全禁煙です (No smoking inside)<br>2. 22時以降はお静かに (Quiet hours after 10PM)<br>3. お困りごとは24時間オーナーまで</div>', unsafe_allow_html=True)
+with t2:
+    st.markdown('### In-Flight Info')
+    st.success("📶 SSID: Deco_C884 / PW: Q99srAe5")
+    st.markdown('<div class="card"><b>Rules</b><br>・禁煙 (No Smoking)<br>・22時以降消音 (Quiet after 10PM)</div>', unsafe_allow_html=True)
 
-with tab3:
-    st.markdown('### Local Guide')
-    st.markdown('<p style="color:#00aaff;">Shopping & Dining</p>', unsafe_allow_html=True)
-    st.write("🛒 **キリン堂 大淀桧垣本店** / **ライフ 大淀店**")
-    st.write("🍽 **赤影** (焼き鳥) / **鳥欽** (焼き鳥) / **和光** (寿司)")
+with t3:
+    st.markdown('### Destination Guide')
+    st.markdown('<p class="accent">Shopping & Dining</p>', unsafe_allow_html=True)
+    st.write("🛒 キリン堂 / ライフ")
+    st.write("🍽 赤影 / 鳥欽 / 和光")
     
-    st.write("---")
-    st.markdown('<p style="color:#00aaff;">Timetable (Kintetsu Railway)</p>', unsafe_allow_html=True)
-    col_k1, col_k2 = st.columns(2)
-    with col_k1:
-        st.link_button("🚉 越部駅 (Kos
+    st.markdown('<p class="accent">Timetable</p>', unsafe_allow_html=True)
+    # URLを直接書かずに短縮
+    url_k = "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E52"
+    url_s = "https://www.kintetsu.co.jp/station/station_info/timetable.html?stcode=E54"
+    st.link_button("🚉 越部駅", url_k)
+    st.link_button("🚉 下市口駅", url_s)
+    
+    st.markdown('<p class="accent">Sightseeing</p>', unsafe_allow_html=True)
+    st.link_button("🌲 道の駅", "https://yoshinoji-oyodo.com/")
+    st.link_button("🌸 金峯山寺", "https://www.kinpusen.or.jp/")
+
+with t4:
+    st.markdown('### Support')
+    st.error("☎︎ Owner: 080-9419-6063")
+    st.markdown('<div class="card"><b>Medical</b><br>南奈良総合医療センター<br>中辻医院</div>', unsafe_allow_html=True)
+    st.write("吉野タクシー: 0746-32-2961")
+
+st.write("---")
+st.caption("Jin Premium Concierge")
